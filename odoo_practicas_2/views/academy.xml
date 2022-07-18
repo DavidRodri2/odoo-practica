@@ -14,10 +14,55 @@
             </field>
         </record>
 
-        <record model="product.category" id="category_student">
+        <!-- <field name="name">make.student.invoices.form</field>
+		<field name="model">make.student.invoices</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Asistente para Generación de Factura">
+				<header></header>
+				<sheet>
+					<separator string="Introduce el Diario para la Factura"/>
+					<field name="journal_id" required="1"/>
+				</sheet>
+				<footer>
+					<div align="center">
+						<button name="make_invoices" string="Generar" type="object"/>
+						<button special="cancel" string="Cerrar" type="object"/>
+					</div>
+				</footer>
+			</form>
+		</field>
+	    </form> -->
+
+        <record model="ir.ui.view" id="tree_student_form">
+            <field name="name">academia.student.tree</field>
+            <field name="model">academia.student</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <!-- <form string="Listado de estudiantes"/> -->
+            </field>
+        </record>
+
+        <act_window name="Genaración de Facturación" res_model="make_student_invoices" src_model="academia_student" view_mode="form" target="new" key2="client_action_multi" id="student_invoices_act" />
+
+        <record model="product_category" id="category_student">
             <field name="name">Factura colegiatura</field>
         </record>
 
+        <record model="ir.ui.view" id="account_move_mail_inherit">
+            <field name="name">account.move.academia</field>
+            <field name="model">account.move</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="account_view_move_form" />
+            <field name="arch" type="xml">
+                <sheet position="after">
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" />
+                        <field name="message_ids" widget="mail_thead" />
+                    </div>
+                </sheet>
+            </field>
+        </record>
         <record model="ir.ui.view" id="academia_student_form">
             <field name="name">academia.student.form</field>
             <field name="model">academia.student</field>
@@ -81,19 +126,31 @@
             <field name="view_mode">tree,form,pivot,graph</field>
         </record>
 
-        <record model="ir.actions.act_window" id="act_student_calificaciones">
+        <!-- <record model="ir.actions.act_window" id="act_student_calificaciones">
             <field name="name">Calificaciones</field>
             <field name="res_model">academia.calificacion</field>
             <field name="view_mode">tree,form</field>
-        </record>
+        </record> -->
+
+        <!-- <record model="ir.actions.act_window" id="act_config_academia">
+            <field name="name">Materias</field>
+            <field name="res_model">academia.calificacion</field>
+            <field name="view_mode">tree,form</field>
+            <field name="arch" type="xml">
+                <tree string="Listado de estudiantes">
+                    <field name="name" />
+                    <field name="last_name" />
+                </tree>
+            </field>
+        </record> -->
 
         <record model="ir.ui.view" id="tree_grado_id">
             <field name="name">academia.grado.tree</field>
             <field name="model">academia.grado</field>
-            <field name="type">tree</field>
+            <field name="type">tree </field>
             <field name="arch" type="xml">
                 <tree string="Grados">
-                    <field name="complete_name" /> 
+                    <field name="complete_name" />
                 </tree>
             </field>
         </record>
@@ -101,20 +158,20 @@
         <record model="ir.ui.view" id="academia_grado">
             <field name="name">academia.grado.form</field>
             <field name="model">academia.grado</field>
-            <field name="type">form</field>
+            <field name="type">form </field>
             <field name="arch" type="xml">
                 <form string="Grados">
                     <header>
                         <sheet>
                             <group>
                                 <field name="name" />
-                                <field name="grupo" />
+                                <field name="group" />
                             </group>
                             <notebook>
                                 <page>
                                     <field name="materia_ids">
                                         <tree string="Materias" editable="bottom">
-                                            <field name="materia_id" />
+                                            <field name="materias_id" />
                                         </tree>
                                     </field>
                                 </page>
@@ -127,7 +184,7 @@
 
         <record model="ir.actions.act_window" id="act_config_grados">
             <field name="name">Grados</field>
-            <field name="res_model">academia.grado</field>
+            <field name="res_model">academia_grado</field>
             <field name="view_mode">tree,form</field>
         </record>
 
@@ -139,10 +196,10 @@
 
         <menuitem id="id_menu_config" parent="id_principal_academia" name="Configuación" sequence="30" />
 
-        <!--<menuitem id="id_menu_config_act" parent="id_principal_academia" action="act_config_academia" sequence="40" />
+        <menuitem id="id_menu_config_act" parent="id_principal_academia" action="act_config_academia" sequence="40" />
 
         <menuitem id="id_menu_calificacion_act" parent="id_manu_config" name="Materias" action="act_config_academia" sequence="sequence" />
 
-        <menuitem id="id_menu_grado_act" parent="id_menu_config" name="Grados" action="act_config_grados" sequence="1" />-->    
+        <menuitem id="id_menu_grado_act" parent="id_menu_config" name="Grados" action="act_config_grados" sequence="1" />
     </data>
 </odoo>

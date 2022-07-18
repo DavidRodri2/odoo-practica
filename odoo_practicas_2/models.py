@@ -8,13 +8,7 @@ class academia_materia_list(models.Model):
 class academia_grado(models.Model):
     _name = 'academia.grado'
     _description = 'Modelo Grados con un listado de materias'
-    
-    @api.depends('name','grupo')
-    def calculate_name(self):
-        complete_name = self.name + " / " + self.grupo
-        self.complete_name = complete_name
-        
-    _rec_name = 'complete_name'
+
     name = fields.Selection([
         ('1', 'Primero'),
         ('2', 'Segundo'),
@@ -28,10 +22,9 @@ class academia_grado(models.Model):
         ('b', 'B'),
         ('c', 'C'),
     ], 'Grupo')
-    
-    materia_ids = fields.One2many('academia.materia.list', 'grado_id', 'Materias')
+    materia_ids = fields.One2many(
+        'academia.materia.list', 'grado_id', 'Materias')
 
-    complete_name = fields.Char('Nombre Completo', size=128, compute="calculate_name", store=True)
 
 class res_partner(models.Model):
     _inherit = 'res.partner'
@@ -59,8 +52,7 @@ class academia_student (models.Model):
             for xcal in self.calificaciones_id:
                 acum += xcal.calificacion
                 if acum:
-                    promedio = acum/len(self.calificaciones_id)
-                    self.promedio=promedio
+                    self.promedio = acum/len(self.calificaciones_id)
         else:
             self.promedio = 0.0
 
@@ -102,28 +94,17 @@ class academia_student (models.Model):
 
     country = fields.Many2one('res.country', 'Pais',
                               related='partner_id.country_id')
-    invoice_ids = fields.Many2many('account.move',
+    invoice_ids = fields.Many2many('account.invoice',
                                    'student_invoice_rel',
                                    'student_id', 'invoice_id',
                                    'Facturas')
-    
-    @api.onchange('grado_id')
-    def onchange_grado(self):
-        calificaciones_list = []
-        for materia in self.grado_id.materia_ids:
-            xval = (0,0,{
-                'name': materia.materia_id.id,
-                'calificacion': 5
-                })
-            calificaciones_list.append(xval)
-        self.update({'calificaciones_id':calificaciones_list})
-        
-    
+
     grado_id = fields.Many2one('academia.grado', 'Grado')
 
-    promedio = fields.Float('Promedio', digits=(14, 2), compute="calcula_promedio")
-    
-    amount_invoice = fields.Float('Monto Facturado', digits=(14, 2), compute='calcula_amount')
+    promedio = fields.Float('Promedio', digits=(14, 2),
+                            compute="calcula_promedio")
+    amount_invoice = fields.Float(
+        'Monto Facturado', digits=(14, 2), compute='calcula_amount')
 
     @api.constrains('curp')
     def _check_lines(self):
