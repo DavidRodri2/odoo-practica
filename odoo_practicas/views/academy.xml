@@ -28,16 +28,31 @@
             <field name="name">Factura Colegiatura</field>
         </record>
 
-        <record model="ir.ui.view" id="tree_student_tree">
-            <field name="name">academia.student.tree</field>
+
+
+        <record model="ir.ui.view" id="pivot_student_tree">
+            <field name="name">academia.student.pivot</field>
             <field name="model">academia.student</field>
-            <field name="type">tree</field>
+            <field name="type">pivot</field>
             <field name="arch" type="xml">
-                <tree string="Listado de estudiantes">
+                <pivot string="Facturacion por Escuela">
+                    <field name="create_date" type="row"/>
+                    <field name="partner_id" type="row"/>
+                    <field name="amount_invoice" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="graph_student_tree">
+            <field name="name">academia.student.graph</field>
+            <field name="model">academia.student</field>
+            <field name="type">graph</field>
+            <field name="arch" type="xml">
+                <graph string="Facturacion por Escuela">
                     <field name="name" />
                     <field name="last_name" />
                     <field name="create_date" />
-                </tree>
+                </graph>
             </field>
         </record>
 

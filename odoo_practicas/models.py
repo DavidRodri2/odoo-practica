@@ -121,7 +121,7 @@ class academia_student (models.Model):
             self.promedio = 0.0
 
     @api.depends('invoice_ids')
-    def calcula_amount(self):
+    def calculas_amount(self):
         acum = 0.0
         for xcal in self.invoice_ids:
             acum += xcal.amount_total
@@ -180,8 +180,7 @@ class academia_student (models.Model):
     promedio = fields.Float('Promedio', digits=(14, 2),
                             compute="calcula_promedio")
 
-    amount_invoice = fields.Float(
-        'Monto Facturado', digits=(14, 2), compute='calcula_amount')
+    amount_invoice = fields.Float('Monto Facturado', digits=(14, 2), compute='calculas_amount')
 
     @api.constrains('curp')
     def _check_lines(self):
