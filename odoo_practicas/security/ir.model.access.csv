@@ -4,3 +4,4 @@ access_academia_calificacion,access_academia_calificacion,model_academia_calific
 access_academia_materia,access_academia_materia,model_academia_materia,,1,1,1,1
 access_academia_grado,access_academia_grado,model_academia_grado,,1,1,1,1
 access_academia_materia_list,access_academia_materia_list,model_academia_materia_list,,1,1,1,1
+access_make_student_invoices,access_make_student_invoices,model_make_student_invoices,,1,1,1,1

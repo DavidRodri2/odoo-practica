@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+        <record id="wizard_student_invoices" model="ir.ui.view">
+            <field name="name">make.student.invoices.form</field>
+            <field name="model">make.student.invoices</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Asistente para generacion de factura">
+                    <header></header>
+                    <sheet>
+                        <separator string="Introduce el Diario para la factura" />
+                        <field name="journal_id" requiered="1" />
+                    </sheet>
+                    <footer>
+                        <div align="center">
+                            <button name="make_invoices" string="Generar" type="object" />
+                            <button special="cancel" string="Cerrar" type="object" />
+                        </div>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        
+
+        <record model="product.category" id="category_student">
+            <field name="name">Factura Colegiatura</field>
+        </record>
+
         <record model="ir.ui.view" id="tree_student_tree">
             <field name="name">academia.student.tree</field>
             <field name="model">academia.student</field>
@@ -25,6 +52,7 @@
             <field name="arch" type="xml">
                 <form string="Listado de estudiantes">
                     <header>
+                        <button string="Generar facturas" name="generarFactura" type="object" class="oe_highlight"/>
                         <button string="Confirmar" name="confirm" type="object" states="draft" />
                         <button string="Cancelar" name="cancel" type="object" states="draft" />
                         <button string="Egresar" name="done" type="object" states="process" />
@@ -93,7 +121,7 @@
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Grados">
-                    <field name="complete_name" /> 
+                    <field name="complete_name" />
                 </tree>
             </field>
         </record>
@@ -143,6 +171,6 @@
 
         <menuitem id="id_menu_calificacion_act" parent="id_manu_config" name="Materias" action="act_config_academia" sequence="sequence" />
 
-        <menuitem id="id_menu_grado_act" parent="id_menu_config" name="Grados" action="act_config_grados" sequence="1" />-->    
+        <menuitem id="id_menu_grado_act" parent="id_menu_config" name="Grados" action="act_config_grados" sequence="1" />-->
     </data>
 </odoo>
